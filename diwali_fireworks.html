@@ -1,0 +1,113 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Diwali</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: radial-gradient(circle at center, #000 60%, #111);
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    h1 {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: gold;
+      font-size: 4em;
+      text-shadow: 0 0 20px orange, 0 0 40px red;
+      z-index: 10;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px orange; }
+      to { text-shadow: 0 0 30px red; }
+    }
+
+    .rocket {
+      position: absolute;
+      width: 4px;
+      height: 20px;
+      background: white;
+      animation: fly 1s ease-out forwards;
+    }
+
+    @keyframes fly {
+      to {
+        transform: translateY(-300px);
+        opacity: 0;
+      }
+    }
+
+    .spark {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      animation: explode 0.8s ease-out forwards;
+    }
+
+    @keyframes explode {
+      to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎉 Happy Diwali 🎉</h1>
+
+  <script>
+    function getRandomColor() {
+      const colors = ['red', 'yellow', 'orange', 'lime', 'cyan', 'magenta', 'white', 'blue', 'pink'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function burst(x, y) {
+      for (let i = 0; i < 50; i++) {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        spark.style.left = `${x}px`;
+        spark.style.top = `${y}px`;
+        spark.style.background = getRandomColor();
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = Math.random() * 150;
+        spark.style.setProperty('--x', `${Math.cos(angle) * distance}px`);
+        spark.style.setProperty('--y', `${Math.sin(angle) * distance}px`);
+        document.body.appendChild(spark);
+        setTimeout(() => spark.remove(), 800);
+      }
+    }
+
+    function launchRocket() {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const x = Math.random() * width;
+      const y = height;
+
+      const rocket = document.createElement('div');
+      rocket.className = 'rocket';
+      rocket.style.left = `${x}px`;
+      rocket.style.top = `${y}px`;
+      document.body.appendChild(rocket);
+
+      setTimeout(() => {
+        burst(x, y - 300);
+        rocket.remove();
+      }, 1000);
+    }
+
+    function startFireworks() {
+      setInterval(launchRocket, 700);
+    }
+
+    window.onload = startFireworks;
+  </script>
+</body>
+</html>
