@@ -1,2 +1,2 @@
-# diwali-fireworks
+# diwali-fireworks.html
 Diwali fireworks animation
